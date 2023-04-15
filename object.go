@@ -1,5 +1,9 @@
 package object
 
+import (
+	"encoding/json"
+)
+
 type Object map[string]any
 
 func (o Object) Object(property string) Object {
@@ -53,6 +57,19 @@ func (o Object) ApplyFrom(src Object) Object {
 	}
 
 	return o
+}
+
+func (o Object) String() string {
+	if o == nil {
+		return ""
+	}
+
+	raw, err := json.Marshal(o)
+	if err != nil {
+		return ""
+	}
+
+	return string(raw)
 }
 
 func AsObject(object any) Object {
